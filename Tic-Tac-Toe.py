@@ -1,83 +1,133 @@
-areas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # 1st 0 is a garbage dump in case of invalid inputs
-sxc = [" ", "x", "o"]                   # sxc stands for: space, x and circle
-turn = 0
-player = 1                              # player 1 = x ; player 2 = o
-tile_1 = 1
-tile_2 = 2
-tile_3 = 3
-x = 3
-y = 3
-z = 3
-timer = 0
-while 1 == 1:            # this lets the game keep going until the break command
+tuile = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # 1er 0 est un dépotoire en cas de saisie invalid
+exc = [" ", "x", "o"]                   # sxc veut dire : espace, x et cercle
+tour = 0
+joueur = 1                              # joueur 1 = x ; joueur 2 = o (ça pointe directement à la liste «exc»)
+while 1 == 1:            # ceci loop le jeu jusqu'à ce qu'il reçoit la command «break»
   print("""
 
 
   """)
   print("                  Exemple")
-  print(f"{sxc[areas [7]]} ║ {sxc[areas [8]]} ║ {sxc[areas [9]]}        7 ║ 8 ║ 9") # 1st row
+  print(f"{exc[tuile [7]]} ║ {exc[tuile [8]]} ║ {exc[tuile [9]]}        7 ║ 8 ║ 9")
   print("══╬═══╬══        ══╬═══╬══")
-  print(f"{sxc[areas [4]]} ║ {sxc[areas [5]]} ║ {sxc[areas [6]]}        4 ║ 5 ║ 6") # 3rd row
+  print(f"{exc[tuile [4]]} ║ {exc[tuile [5]]} ║ {exc[tuile [6]]}        4 ║ 5 ║ 6")
   print("══╬═══╬══        ══╬═══╬══")
-  print(f"{sxc[areas [1]]} ║ {sxc[areas [2]]} ║ {sxc[areas [3]]}        1 ║ 2 ║ 3") # 5th row
+  print(f"{exc[tuile [1]]} ║ {exc[tuile [2]]} ║ {exc[tuile [3]]}        1 ║ 2 ║ 3")
   print("")
 
-  while timer < 7:
-    if (areas[tile_1] == areas[tile_2] and areas[tile_1] == areas[tile_3]) and areas[tile_1] != 0:
-      print(f" {sxc[areas[tile_1]]} GAGNE")     # the code above compares three values on the board and repeats 7 times
-      turn = 10                                 # this changes the ending message
-      break                                     # this stops the check, i don't think its necessary but ikd
-    else:
-      tile_1 += x                               # changes the tiles to check (horizontal)
-      tile_2 += y
-      tile_3 += z
-      timer += 1
-      if timer == 2:                            # after checking 3 rows, it switchs to columns
-        x = 1
-        y = 1
-        z = 1
-        tile_3 = 7
-        tile_2 = 4
-        tile_1 = 1
-      elif timer == 5:                          # after cheking 3 columns, it switchs to diagonal
-        tile_3 = 9                              # PS. the code for diagonal is very improvised and dumb
-        tile_2 = 5
-        tile_1 = 1
-        x = 2
-        y = 0
-        z = -2
-  timer = 0             # resets the values of all checking tools so the process can repeat each turn
-  tile_1 = 1
-  tile_2 = 2
-  tile_3 = 3
-  x = 3
-  y = 3
-  z = 3
-
-  if turn >= 9:               # ends the game when the grid is filled (after 9 turns)
-    if turn == 10:            # ends the game without the MATCH NUL message (if someone wins)
+  for x in "y":                             # permet au jeu de montrer la grille du gagnant avant de terminer
+    if (tuile[1] == tuile[2] and tuile[1] == tuile[3]) and tuile[1] != 0:
+      print(f" {exc[tuile[1]]} GAGNE")      # le code en haut compare trois valeurs sur la grille et répète 7 fois
+      tour = 10                                 # ceci évite le message «MATCH NUL» à la fin
+      break                                     # j'ai inclue cet command en cas de gagnant double 
+    """
+      ║   ║  
+    ══╬═══╬══
+      ║   ║  
+    ══╬═══╬══
+    1 ║ 2 ║ 3
+    """
+    if (tuile[4] == tuile[5] and tuile[4] == tuile[6]) and tuile[4] != 0:
+      print(f" {exc[tuile[4]]} GAGNE")
+      tour = 10
       break
+    """
+      ║   ║  
+    ══╬═══╬══
+    4 ║ 5 ║ 6
+    ══╬═══╬══
+      ║   ║  
+    """
+    if (tuile[7] == tuile[8] and tuile[7] == tuile[9]) and tuile[7] != 0:
+      print(f" {exc[tuile[7]]} GAGNE")
+      tour = 10
+      break
+    """
+    7 ║ 8 ║ 9
+    ══╬═══╬══
+      ║   ║  
+    ══╬═══╬══
+      ║   ║  
+    """
+    if (tuile[1] == tuile[4] and tuile[1] == tuile[7]) and tuile[1] != 0:
+      print(f" {exc[tuile[1]]} GAGNE")
+      tour = 10
+      break
+    """
+    7 ║   ║  
+    ══╬═══╬══
+    4 ║   ║  
+    ══╬═══╬══
+    1 ║   ║  
+    """
+    if (tuile[2] == tuile[5] and tuile[2] == tuile[8]) and tuile[2] != 0:
+      print(f" {exc[tuile[2]]} GAGNE")
+      tour = 10
+      break
+    """
+      ║ 8 ║  
+    ══╬═══╬══
+      ║ 5 ║  
+    ══╬═══╬══
+      ║ 2 ║  
+    """
+    if (tuile[3] == tuile[6] and tuile[3] == tuile[9]) and tuile[3] != 0:
+      print(f" {exc[tuile[3]]} GAGNE")
+      tour = 10
+      break
+    """
+      ║   ║ 9
+    ══╬═══╬══
+      ║   ║ 6
+    ══╬═══╬══
+      ║   ║ 3
+    """
+    if (tuile[1] == tuile[5] and tuile[1] == tuile[9]) and tuile[1] != 0:
+      print(f" {exc[tuile[1]]} GAGNE")
+      tour = 10
+      break
+    """
+      ║   ║ 9
+    ══╬═══╬══
+      ║ 5 ║  
+    ══╬═══╬══
+    1 ║   ║  
+    """
+    if (tuile[3] == tuile[5] and tuile[3] == tuile[7]) and tuile[3] != 0:
+      print(f" {exc[tuile[3]]} GAGNE")
+      tour = 10
+      break
+    """
+    7 ║   ║  
+    ══╬═══╬══
+      ║ 5 ║  
+    ══╬═══╬══
+      ║   ║ 3
+    """
+
+  if tour == 9:               # termine le jeu quand la grille est remplie (après 9 tours)
     print("MATCH NUL")
     break
-  print("Joueur " + sxc[player])
+  if tour == 10:              # termine le jeu sans le message «MATCH NUL» (si quelqu'un gagne)
+    break
+  print("Joueur " + exc[joueur])
   try:
     player_tile = int(input("Choisissez votre cadre: "))
-  except ValueError:                                                    # checks for non-integer values
+  except ValueError:                                                    # verifie pour des saisies non-entier
     player_tile = 0
-  if player_tile < 1 or player_tile > 9 or areas [player_tile] > 0:     # checks for invalid integer values
+  if player_tile < 1 or player_tile > 9 or tuile [player_tile] > 0:     # verifie pour des entiers hors la liste
     player_tile = 0
     print("")
     print("VALEUR INVALID!")
-    dummy_value = input("Appuyez sur Entrée pour continuer: ")
+    valeur_inutile = input("Appuyez sur Entrée pour continuer: ")
   else:
-    areas [player_tile] += player     # turns the corresponding area into x or o
-    turn += 1                         # increments the turn value
-    player = turn % 2 + 1             # changes players based on the turn
-
+    tuile [player_tile] += joueur     # change la tuile correspondante en x ou o
+    tour += 1                         # augmente la valeur du tour
+    joueur = tour % 2 + 1             # change le joueur basé sur le tour
 
 
 """
-a few copy/paste samples:
+quelques échantillons pour copiés/collés :
 │┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌
   ║   ║  
 ══╬═══╬══
